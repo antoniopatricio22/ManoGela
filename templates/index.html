@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciamento de Geladeira</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>   
 </head>
 <body>
     <h1>Estoque da Geladeira</h1>
@@ -36,6 +38,26 @@
         <label for="validade">Validade:</label>
         <input type="date" id="validade" name="validade" required><br>
         <button type="submit">Adicionar</button>
+    </form>
+
+    <h2>Temperatura da Geladeira</h2>
+    <p id="temperatura">Temperatura atual: {{ temperatura }}°C</p>
+    <form action="/ajusta_temperatura" method="post">
+        <label for="nova_temperatura">Nova Temperatura:</label>
+        <input type="number" id="nova_temperatura" name="nova_temperatura" required><br>
+        <button type="submit">Ajustar Temperatura</button>
+    </form>
+
+    <h2>Situação da Porta</h2>
+    <p id="porta">Situação atual: {{ porta }}</p>
+    <form action="/alterar_porta" method="post">
+        <label>
+            <input type="radio" name="nova_situacao" value="Aberta" required> Aberta
+        </label>
+        <label>
+            <input type="radio" name="nova_situacao" value="Fechada" required> Fechada
+        </label><br>
+        <button type="submit">Alterar Situação da Porta</button>
     </form>
 </body>
 </html>
