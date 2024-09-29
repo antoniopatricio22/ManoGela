@@ -15,7 +15,14 @@
             <th>Preço Unitário (R$)</th>
             <th>Validade</th>
         </tr>
-        <!-- Aqui você pode adicionar uma maneira de listar os produtos do estoque -->
+        {% for item in estoque %}
+        <tr>
+            <td>{{ item['Produto'] }}</td>
+            <td>{{ item['Quantidade'] }}</td>
+            <td>{{ item['Preço Unitário (R$)'] }}</td>
+            <td>{{ item['Validade'] }}</td>
+        </tr>
+        {% endfor %}
     </table>
 
     <h2>Abastecer Estoque</h2>
