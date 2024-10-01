@@ -32,12 +32,31 @@ def abastecer():
     df_estoque.to_csv('data/estoque_geladeira.csv', index=False)
     return redirect('/')
 
+@app.route('/desabastecer', methods=['POST'])
+def desabastecer():
+    produto = request.form['produto']
+    validade = request.form['validade']
+    
+    global df_estoque
+    temp_produto = (df_estoque['Produto'] == produto) & (df_estoque['Validade'] == validade)
+    
+    if temp_produto.any():
+        df_estoque = df_estoque[~temp_produto]
+        df_estoque.to_csv('data/estoque_geladeira.csv', index=False)
+        return redirect('/')
+    else:
+        # Tem que tretar com JS, modal, html, pra ter msg de erro na tela...
+        return "Produto não encontrado - 404", 404
+
 @app.route('/ajusta_temperatura', methods=['POST'])
 def ajusta_temperatura():
     nova_temperatura = int(request.form['nova_temperatura'])
-    df_status_geladeira.at[0, 'Temperatura'] = nova_temperatura
-    df_status_geladeira.to_csv('data/geladeira.csv', index=False)
-    return redirect('/')
+    if nova_temperatura < 9 and nova_temperatura > -3: 
+        df_status_geladeira.at[0, 'Temperatura'] = nova_temperatura
+        df_status_geladeira.to_csv('data/geladeira.csv', index=False)
+        return redirect('/')
+    else:
+        return "Temperatura fora da faixa[-2°C a 8°C] - 400", 400
 
 @app.route('/alterar_porta', methods=['POST'])
 def alterar_porta():

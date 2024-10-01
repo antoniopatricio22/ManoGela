@@ -40,6 +40,15 @@
         <button type="submit">Adicionar</button>
     </form>
 
+    <h2>Desabastecer Estoque</h2>
+    <form action="/desabastecer" method="post">
+    <label for="produto">Produto:</label>
+    <input type="text" id="produto" name="produto" required><br>
+    <label for="validade">Validade:</label>
+    <input type="date" id="validade" name="validade" required><br>
+    <button type="submit">Retirar</button>
+    </form>
+
     <h2>Temperatura da Geladeira</h2>
     <p id="temperatura">Temperatura atual: {{ temperatura }}°C</p>
     <form action="/ajusta_temperatura" method="post">
